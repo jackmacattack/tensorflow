@@ -309,6 +309,15 @@ def tf_proto_library(name, srcs = [], has_services = None,
       visibility = visibility,
   )
 
+  native.proto_library(
+      name = name + "_proto_lib",
+      srcs = srcs,
+      deps = protodeps + ["@com_google_protobuf_updated//:any_proto"],
+      testonly = testonly,
+      visibility = visibility,
+  )
+
+
 def tf_additional_lib_hdrs(exclude = []):
   windows_hdrs = native.glob([
       "platform/default/*.h",
