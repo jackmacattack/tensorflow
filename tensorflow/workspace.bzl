@@ -36,7 +36,7 @@ def _parse_bazel_version(bazel_version):
   # Turn "release" into a tuple of strings
   version_tuple = ()
   for number in parts[0].split("."):
-    version_tuple += (str(number),)
+    version_tuple += (int(number),)
   return version_tuple
 
 
@@ -233,11 +233,11 @@ def tf_workspace(path_prefix="", tf_repo_name=""):
   native.http_archive(
       name = "com_googlesource_code_re2",
       urls = [
-          "http://mirror.bazel.build/github.com/google/re2/archive/b94b7cd42e9f02673cd748c1ac1d16db4052514c.tar.gz",
-          # "https://github.com/google/re2/archive/b94b7cd42e9f02673cd748c1ac1d16db4052514c.tar.gz",
+          "https://mirror.bazel.build/github.com/google/re2/archive/26cd968b735e227361c9703683266f01e5df7857.tar.gz",
+          "https://github.com/google/re2/archive/26cd968b735e227361c9703683266f01e5df7857.tar.gz",
       ],
-      sha256 = "bd63550101e056427c9e7ff12a408c1c8b74e9803f393ca916b2926fc2c4906f",
-      strip_prefix = "re2-b94b7cd42e9f02673cd748c1ac1d16db4052514c",
+      sha256 = "e57eeb837ac40b5be37b2c6197438766e73343ffb32368efea793dfd8b28653b",
+      strip_prefix = "re2-26cd968b735e227361c9703683266f01e5df7857",
   )
 
   native.http_archive(
@@ -381,18 +381,14 @@ def tf_workspace(path_prefix="", tf_repo_name=""):
 
   # TODO(gunan): Add github mirror back if/when sha256sum issues are resolved.
   #   See https://github.com/libgit2/libgit2/issues/4343 for contetxt.
-  patched_http_archive(
+  native.http_archive(
       name = "protobuf_archive",
       urls = [
-          "http://mirror.bazel.build/github.com/google/protobuf/archive/b04e5cba356212e4e8c66c61bbe0c3a20537c5b9.tar.gz",
+          "https://mirror.bazel.build/github.com/google/protobuf/archive/396336eb961b75f03b25824fe86cf6490fb75e3a.tar.gz",
+          "https://github.com/google/protobuf/archive/396336eb961b75f03b25824fe86cf6490fb75e3a.tar.gz",
       ],
-      sha256 = "e178a25c52efcb6b05988bdbeace4c0d3f2d2fe5b46696d1d9898875c3803d6a",
-      strip_prefix = "protobuf-b04e5cba356212e4e8c66c61bbe0c3a20537c5b9",
-      # TODO: remove patching when tensorflow stops linking same protos into
-      #       multiple shared libraries loaded in runtime by python.
-      #       This patch fixes a runtime crash when tensorflow is compiled
-      #       with clang -O2 on Linux (see https://github.com/tensorflow/tensorflow/issues/8394)
-      patch_file = str(Label("//third_party/protobuf:add_noinlines.patch")),
+      sha256 = "846d907acf472ae233ec0882ef3a2d24edbbe834b80c305e867ac65a1f2c59e3",
+      strip_prefix = "protobuf-396336eb961b75f03b25824fe86cf6490fb75e3a",
   )
 
   native.bind(
@@ -407,20 +403,22 @@ def tf_workspace(path_prefix="", tf_repo_name=""):
   native.http_archive(
       name = "com_google_protobuf",
       urls = [
-          "http://mirror.bazel.build/github.com/google/protobuf/archive/0b059a3d8a8f8aa40dde7bea55edca4ec5dfea66.tar.gz",
+          "https://mirror.bazel.build/github.com/google/protobuf/archive/396336eb961b75f03b25824fe86cf6490fb75e3a.tar.gz",
+          "https://github.com/google/protobuf/archive/396336eb961b75f03b25824fe86cf6490fb75e3a.tar.gz",
       ],
-      sha256 = "6d43b9d223ce09e5d4ce8b0060cb8a7513577a35a64c7e3dad10f0703bf3ad93",
-      strip_prefix = "protobuf-0b059a3d8a8f8aa40dde7bea55edca4ec5dfea66",
+      sha256 = "846d907acf472ae233ec0882ef3a2d24edbbe834b80c305e867ac65a1f2c59e3",
+      strip_prefix = "protobuf-396336eb961b75f03b25824fe86cf6490fb75e3a",
   )
 
   # TODO(gunan): Add github mirror back if/when sha256sum issues are resolved.
   native.http_archive(
       name = "com_google_protobuf_cc",
       urls = [
-          "http://mirror.bazel.build/github.com/google/protobuf/archive/0b059a3d8a8f8aa40dde7bea55edca4ec5dfea66.tar.gz",
+          "https://mirror.bazel.build/github.com/google/protobuf/archive/396336eb961b75f03b25824fe86cf6490fb75e3a.tar.gz",
+          "https://github.com/google/protobuf/archive/396336eb961b75f03b25824fe86cf6490fb75e3a.tar.gz",
       ],
-      sha256 = "6d43b9d223ce09e5d4ce8b0060cb8a7513577a35a64c7e3dad10f0703bf3ad93",
-      strip_prefix = "protobuf-0b059a3d8a8f8aa40dde7bea55edca4ec5dfea66",
+      sha256 = "846d907acf472ae233ec0882ef3a2d24edbbe834b80c305e867ac65a1f2c59e3",
+      strip_prefix = "protobuf-396336eb961b75f03b25824fe86cf6490fb75e3a",
   )
 
   native.http_archive(
