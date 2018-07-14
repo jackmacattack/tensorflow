@@ -395,7 +395,6 @@ def tf_proto_library(name, srcs = [], has_services = None,
       visibility = visibility,
   )
 
-
 def tf_additional_lib_hdrs(exclude = []):
   windows_hdrs = native.glob([
       "platform/default/*.h",
